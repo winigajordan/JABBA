@@ -1,6 +1,7 @@
 {% extends 'base.pages.html.twig' %}
 {% block title %} Gestion boutique {% endblock %}
 {% block body %}
+
 <div class="container">
     <div class="jumbotron">
         <div class="card px-3 py-3 shadow">
@@ -72,19 +73,29 @@
                             <input type="number" class="form-control" id="prix" name="prix" >
                         </div>
                         <div class="mb-3">
+                            <label for="taille" class="form-label">Taille du produit</label>
+                            <input type="text" class="form-control" id="taille" name="taille" >
+                        </div>
+                        <div class="mb-3">
                             <label for="formFile" class="form-label">Image du produit</label>
                             <input type="file" class="form-control" id="formFile" name="image" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
                         </div>
                         <div class="form-check"mb-3>
-                            <input class="form-check-input" type="checkbox" id="defaultCheck1">
+                            <input class="form-check-input" type="checkbox" id="defaultCheck1" name="isSolde">
                             <label class="form-check-label" for="defaultCheck1">
                                 Produit en solde
                             </label>
+                        </div>
+                        <div class="range-wrap my-3" style=" position: relative; margin: 0 auto 3rem;">
+                            <label for="range" class="form-label">Pourcentage de reduction</label>
+                            <input id="range" type="range" class="range" min="0" max="100" style="width: 100%;" name="solde">
+                            <output class="bubble" style=" margin-top: 20px; background: red;  color: white;  padding: 4px 12px;  position: absolute;  border-radius: 4px;left: 50%;transform: translateX(-50%);"></output>
                         </div>
                         <div class="my-3">
                             <label for="exampleFormControlTextarea1" class="form-label">Description</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -93,3 +104,31 @@
     </div>
 </div>
 {% endblock %}
+
+{% block script %}
+    <script>
+        const allRanges = document.querySelectorAll(".range-wrap");
+        allRanges.forEach(wrap => {
+            const range = wrap.querySelector(".range");
+            const bubble = wrap.querySelector(".bubble");
+
+            range.addEventListener("input", () => {
+                setBubble(range, bubble);
+            });
+            setBubble(range, bubble);
+        });
+
+        function setBubble(range, bubble) {
+            const val = range.value;
+            const min = range.min ? range.min : 0;
+            const max = range.max ? range.max : 100;
+            const newVal = Number(((val - min) * 100) / (max - min));
+            bubble.innerHTML = val;
+
+            // Sorta magic numbers based on size of the native UI thumb
+            bubble.style.left = `calc(${newVal}% + (${8 - newVal * 0.15}px))`;
+        }
+    </script>
+
+
+{% endblock script %}

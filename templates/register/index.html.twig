@@ -1,0 +1,37 @@
+{% extends 'base.pages.html.twig' %}
+{% block title %} Register {% endblock %}
+
+{% block body %}
+    <div class="container">
+    <div class="jumbotron">
+        <form class="px-6 py-3" method="post" action="{{ path('account_creation') }}">
+            <h3> Creation de compte client </h3>
+
+            <div class="mb-3">
+                <label for="nom" class="form-label">Nom</label>
+                <input type="text" class="form-control" id="nom" name="nom" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="prenom" class="form-label">Prenom</label>
+                <input type="text" name="prenom" class="form-control" id="prenom" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="telephone" class="form-label">Telephone</label>
+                <input type="number" name="telephone" class="form-control" id="telephone" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    </div>
+{% endblock %}
+

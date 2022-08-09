@@ -37,6 +37,11 @@
                        <p>
                            Montant total :  <strong>{{ total }} XOF</strong>
                        </p>
+                       <p> Appliquer une code promo </p>
+                       <form method="post" action="{{ path('app_commande_add') }}">
+                           <input type="text" class="form-control" name="code">
+                           <input type="submit" class="form-control mt-3 btn-primary" value="Valider ma commande">
+                       </form>
                    </div>
                </div>
 

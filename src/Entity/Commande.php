@@ -35,6 +35,9 @@ class Commande
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: DetailsCommande::class)]
     private Collection $detailsCommandes;
 
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    private ?Code $code = null;
+
     public function __construct()
     {
         $this->detailsCommandes = new ArrayCollection();
@@ -131,6 +134,18 @@ class Commande
                 $detailsCommande->setCommande(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCode(): ?Code
+    {
+        return $this->code;
+    }
+
+    public function setCode(?Code $code): self
+    {
+        $this->code = $code;
 
         return $this;
     }

@@ -33,13 +33,19 @@ class Produit
     private ?bool $isSolde = null;
 
     #[ORM\Column]
-    private ?float $newMonant = null;
+    private ?float $newMontant = null;
 
     #[ORM\Column(length: 255)]
     private ?string $taille = null;
 
     #[ORM\ManyToOne(inversedBy: 'produits')]
     private ?Boutique $boutique = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
+    #[ORM\ManyToOne(inversedBy: 'produits')]
+    private ?CategorieProduit $categorie = null;
 
     public function getId(): ?int
     {
@@ -118,14 +124,14 @@ class Produit
         return $this;
     }
 
-    public function getNewMonant(): ?float
+    public function getNewMontant(): ?float
     {
-        return $this->newMonant;
+        return $this->newMontant;
     }
 
-    public function setNewMonant(float $newMonant): self
+    public function setNewMontant(float $newMontant): self
     {
-        $this->newMonant = $newMonant;
+        $this->newMontant = $newMontant;
 
         return $this;
     }
@@ -150,6 +156,30 @@ class Produit
     public function setBoutique(?Boutique $boutique): self
     {
         $this->boutique = $boutique;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?CategorieProduit
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?CategorieProduit $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

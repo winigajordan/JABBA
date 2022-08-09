@@ -47,23 +47,27 @@
                             <th scope="col">Prix</th>
                             <th scope="col">Solde</th>
                             <th scope="col">Etat</th>
+                            <th scope="col">Categorie</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
+                        {% for produit in boutique.produits %}
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
+                            <th scope="row">{{ produit.libelle }}</th>
+                            <td>{% if produit.isSolde %} {{ produit.newMontant }}{% else %} {{ produit.montant}} {% endif %}</td>
+                            <td>{% if produit.isSolde %} Oui {% else %} Non {% endif %}</td>
+                            <td>{{ produit.etat }}</td>
+                            <td>{{ produit.categorie.libelle }}</td>
+                            <td><a class="btn btn-primary btn-outline btn-sm" href="#">Details</a></td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
                 <div class="col-5">
                     <p> <strong>Ajouter un produit à ma boutique</strong> </p>
-                    <form>
+                    <form method="post" action="{{ path('shop_product_add') }}" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Nom du produit</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="nom" >
@@ -72,6 +76,11 @@
                             <label for="prix" class="form-label">Prix du produit</label>
                             <input type="number" class="form-control" id="prix" name="prix" >
                         </div>
+                        <select class="form-select" aria-label="Default select example" name="categorie">
+                            {% for cat in cats %}
+                            <option value="{{ cat.id }}">{{ cat.libelle }}</option>
+                            {% endfor %}
+                        </select>
                         <div class="mb-3">
                             <label for="taille" class="form-label">Taille du produit</label>
                             <input type="text" class="form-control" id="taille" name="taille" >
@@ -93,9 +102,10 @@
                         </div>
                         <div class="my-3">
                             <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="description"></textarea>
                         </div>
 
+                        <input type="submit" value="Ajouter" class="btn btn-primary">
                     </form>
                 </div>
             </div>

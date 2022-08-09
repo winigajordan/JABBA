@@ -1,0 +1,75 @@
+{% extends 'base.admin.html.twig' %}
+
+{% block title %}Code Promo{% endblock %}
+
+{% block body %}
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h3 class="page-title"> Code promo </h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Commandes</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Code Promo</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Liste des codes </h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Libelle</th>
+                                    <th>Pourcentage de reduction</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+
+                                {% for code in codes %}
+                                    <tr>
+                                        <td class="text-success"> {{ code.code }} </td>
+                                        <td><label class="badge badge-success">{{ code.reduction * 100 }} %</label></td>
+                                        <td><label class="badge badge-success">Completed</label></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 grid-margin ">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Ajouter un code promo</h4>
+
+                        <form method="post" action="{{ path('app_admin_code_promo_add') }}">
+                            <div class="form-group row">
+                                <label for="exampleInputMobile" class="col-sm-3 col-form-label">Nom </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="exampleInputMobile" placeholder="Nom de la catégorie" name="nom">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="hihi" class="col-sm-3 col-form-label">Pourcentage de réduction </label>
+                                <div class="col-sm-9">
+                                    <input type="number" step="0.01" class="form-control" id="hihi" placeholder="Nom de la catégorie" name="pourcentage">
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-primary mr-2" value="Ajouter">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}

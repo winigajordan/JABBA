@@ -5,11 +5,16 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <p>Liste des boutiques</p>
+                <p>Filtre</p>
                 <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item">
+                        <a class="btn btn-sm btn-warning" href="{{ path('app_shop') }}">
+                            Tous les produits
+                        </a>
+                    </li>
                     {% for btq in boutiques %}
                     <li class="list-group-item">
-                        <a class="btn btn-primary" href="#">
+                        <a class="btn btn-sm btn-primary" href="{{ path('app_shop', {'boutique' : btq.slug}) }}">
                             {{ btq.nom }}
                         </a>
                     </li>
@@ -40,10 +45,23 @@
                             <td>{{ prod.boutique.nom }}</td>
                             <td> <img src="{{ asset('/files/images/products/') }}{{ prod.image }}" width="50" height="50"></td>
                             <td>
-                                <div class="row">
+                                <div class="row ">
                                     <div class="col">
-                                        <a class="btn btn-sm btn-primary" href="#"> Panier </a>
+                                        <form method="post" action="{{ path('add_item') }}">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <input type="number" class="form-control" value="1" name="qte">
+                                                    <input type="text" name="id" hidden value="{{ prod.slug }}">
+
+                                                </div>
+                                                <div class="col">
+                                                    <input type="submit" class="btn btn-sm btn-primary" href="#" value="Ajout au panier">
+                                                </div>
+                                            </div>
+
+                                        </form>
                                     </div>
+
                                     <div class="col">
                                         <a class="btn btn-sm btn-primary" href="#"> Achat </a>
                                     </div>

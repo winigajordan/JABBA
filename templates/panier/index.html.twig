@@ -1,20 +1,46 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Hello PanierController!{% endblock %}
-
+{% extends 'base.pages.html.twig' %}
+{% block title %} Panier {% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container">
+        <div class="card p-3">
+            <div class="card-header">
+                <p>Panier</p>
+            </div>
+           <div class="card-body">
+               <div class="row">
+                   <div class="col-8">
+                       <table class="table table-striped table-hover">
+                           <thead>
+                           <tr>
+                               <th scope="col"></th>
+                               <th scope="col">Nom</th>
+                               <th scope="col">Quantité</th>
+                               <th scope="col">Prix</th>
+                               <th scope="col"></th>
+                           </tr>
+                           </thead>
+                           <tbody>
+                           {% for prod in items %}
+                           <tr>
+                               <th scope="row"><img src="{{ asset('/files/images/products/') }}{{ prod.item.image }}" width="50" height="50"></th>
+                               <td>{{ prod.item.libelle}}</td>
+                               <td>{{ prod.qte}}</td>
+                               <td>{% if prod.item.isSolde %} {{ prod.item.newMontant * prod.qte}} {% else %} {{ prod.item.montant * prod.qte}} {% endif %}</td>
+                               <td> <input type="submit" class="btn btn-sm btn-primary" value="Modifier la qte" ></td>
+                           </tr>
+                           {% endfor %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+                           </tbody>
+                       </table>
+                   </div>
+                   <div class="col-4">
+                       <p>
+                           Montant total :  <strong>{{ total }} XOF</strong>
+                       </p>
+                   </div>
+               </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/STAGE ISM/PROJET JABBA/JABBA/src/Controller/PanierController.php'|file_link(0) }}">src/Controller/PanierController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/STAGE ISM/PROJET JABBA/JABBA/templates/panier/index.html.twig'|file_link(0) }}">templates/panier/index.html.twig</a></code></li>
-    </ul>
-</div>
+           </div>
+        </div>
+    </div>
 {% endblock %}

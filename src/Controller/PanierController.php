@@ -21,6 +21,7 @@ class PanierController extends AbstractController
         $this->prodRipo = $prodRipo;
     }
 
+
     #[Route('/panier', name: 'app_panier')]
     public function index(SessionInterface $session): Response
     {
@@ -52,6 +53,9 @@ class PanierController extends AbstractController
 
     #[Route('/panier/add', name: 'add_item')]
     public function addItem( Request $request, SessionInterface $session) : Response{
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         //dd($request->request);
         $panier = $session->get('panier', []);
         $qte = $request->request->get('qte');

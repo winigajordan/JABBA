@@ -110,6 +110,7 @@ class GestionBoutiqueController extends AbstractController
             $produit->setIsSolde(false);
             $produit->setNewMontant($produit->getMontant());
         }
+
         $img=$request->files->get("image");
         $imageName=uniqid().'.'.$img->guessExtension();
         $img->move($this->getParameter("products"),$imageName);

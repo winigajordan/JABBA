@@ -30,6 +30,7 @@ class Vente extends Transaction
 
     public function getDetails(): ?DetailsCommande
     {
+
         return $this->details;
     }
 

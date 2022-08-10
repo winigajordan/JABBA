@@ -108,7 +108,16 @@ class CommandeController extends AbstractController
        $this->em->persist($commande);
        $this->em->flush();
        $session->set('panier', []);
-       dd('done');
+       //dd('done');
        return $this->redirectToRoute('app_commande');
+    }
+
+    #[Route('/commande/details/{slug}', name: 'app_commande_details')]
+    public function details($slug): Response
+    {
+        return $this->render('commande/index.html.twig', [
+            'commandes'=>$this->getUser()->getCommandes(),
+            'selected'=>$this->cmdRipo->findOneBy(['slug'=>$slug])
+        ]);
     }
 }

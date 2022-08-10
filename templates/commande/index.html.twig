@@ -2,6 +2,113 @@
 
 {% block title %} Mes commandes {% endblock %}
 
-{% block body %}
+{% block style %}
+<style>
 
+
+    .card-dtl {
+        border: none;
+        background-color: #a8b2b9;
+        border-radius: 10px
+    }
+
+    .c-details span {
+        font-weight: 300;
+        font-size: 13px
+    }
+
+    .icon {
+        width: 50px;
+        height: 50px;
+        background-color: #eee;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 39px
+    }
+
+    .badge span {
+        width: 60px;
+        height: 25px;
+        padding-bottom: 3px;
+        border-radius: 5px;
+        display: flex;
+        color: #fed85d;
+        justify-content: center;
+        align-items: center
+    }
+
+
+
+</style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="card p-3">
+            <div class="card-header">
+                <p>
+                    Liste de mes commandes
+                </p>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">Reference</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Montant</th>
+                                <th scope="col">Etat</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for cmd in commandes %}
+                            <tr>
+                                <th scope="row">{{ cmd.slug }}</th>
+                                <td>{{ cmd.date | date("d/m/Y H:m") }}</td>
+                                <td>{{ cmd.montant }}</td>
+                                <td>{{ cmd.etat }}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-primary" href="{{ path('app_commande_details', {'slug':cmd.slug}) }}">Details</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% if selected is defined %}
+                    <div class="col-6">
+                        <div class="row">
+                        {% for details in selected.detailsCommandes %}
+
+                                <div class=" col-6">
+                                    <div class="card-dtl p-3 mb-2">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex flex-row align-items-center">
+                                                <div class="icon">
+                                                    <img src="{{ asset('/files/images/products/') }}{{ details.produit.image }}" width="50" height="50">
+                                                </div>
+                                                <div class="ms-2 c-details">
+                                                    <h6 class="mb-0">{{ details.produit.libelle }}</h6> <span>{{ details.quantite}} - {{ details.prix}} </span>
+                                                </div>
+                                            </div>
+                                            <div class="badge"> <span style="text-decoration: black">{{ details.etat }}</span> </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                        {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

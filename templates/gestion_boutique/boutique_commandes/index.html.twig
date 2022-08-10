@@ -14,6 +14,7 @@
                         <th scope="col">Produit</th>
                         <th scope="col">Quantité</th>
                         <th scope="col">Montant vente</th>
+                        <th scope="col">Etat</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -24,9 +25,10 @@
                         <td>{{ item.produit.libelle }}</td>
                         <td>{{ item.quantite }}</td>
                         <td>{{ item.prix }}</td>
+                        <td>{{ item.etat }}</td>
                         <td>
-                            <a class="btn btn-xs btn-primary" href="#">Valider</a>
-                            <a class="btn btn-xs btn-warning" href="#">Annuler</a>
+                            <a class="btn btn-xs btn-primary" href="{{ path('app_boutique_commandes_update', {'slug':item.slug, 'update' : 'VALIDE'}) }}">Valider</a>
+                            <a class="btn btn-xs btn-warning" href="{{ path('app_boutique_commandes_update', {'slug':item.slug, 'update' : 'ANNULE'}) }}">Annuler</a>
                         </td>
                     </tr>
                     {% endfor %}

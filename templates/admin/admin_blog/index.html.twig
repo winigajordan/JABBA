@@ -1,0 +1,94 @@
+{% extends 'base.admin.html.twig' %}
+{% block title %} Blog {% endblock title %}
+{% block body %}
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h3 class="page-title"> Catégorie de produit </h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Produits</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Catégorie de produit</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Liste des catégories</h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>titre</th>
+                                    <th>Date</th>
+                                    <th>Auteur</th>
+                                    <th>Etat</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for art in articles %}
+                                    <tr>
+                                        <td class="text-success"> {{ art.titre }} </td>
+                                        <td class="text-success"> {{ art.date | date('d-m-Y H:m') }} </td>
+                                        <td class="text-success"> {{ art.auteur.prenom }} {{ art.auteur.nom }} </td>
+                                        <td><label class="badge badge-success">{{ art.etat }}</label></td>
+
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 grid-margin ">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Ajouter un article de blog</h4>
+
+                        <form method="post" action="{{ path('app_admin_blog_add') }}" enctype="multipart/form-data">
+                            <div class="form-group row">
+                                <label for="exampleInputMobile" class="col-sm-3 col-form-label">Titre </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="exampleInputMobile" placeholder="Titre" name="titre">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Category</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="categorie">
+                                        {% for cat in categories %}
+                                        <option value="{{ cat.id }}">{{ cat.libelle }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="desc" class="col-sm-3 col-form-label">Description </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="desc" placeholder="Description" name="description">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="content" class="col-sm-3 col-form-label">Contenu </label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" id="exampleTextarea1" rows="4" name="contenu"></textarea>
+                                </div>
+                            </div>
+                            <div class="input-group col-xs-12">
+                                <input class="file-upload-browse btn btn-primary form-control" type="file" name="image" value=" ">
+                              </span>
+                            </div>
+                            <input type="submit" class="btn btn-primary mt-3 mr-2">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock  %}

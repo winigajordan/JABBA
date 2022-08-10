@@ -21,12 +21,21 @@
               </a>
 
               <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-                <li><a href="{{ path('app_shop') }}" class="nav-link px-2 link-dark">Shop</a></li>
 
-                <li><a href="{{ path('app_gestion_boutique') }}" class="nav-link px-2 link-dark">Ma boutique</a></li>
-                <li><a href="{{ path('app_panier') }}" class="nav-link px-2 link-dark">Panier</a></li>
-                <li><a href="{{ path('app_commande') }}" class="nav-link px-2 link-dark">Commandes</a></li>
+                <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+
+                <div class="dropdown mt-1 m-3">
+                  <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Shopping
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a href="{{ path('app_boutique') }}" class="dropdown-item">Shop</a></li>
+                    <li><a href="{{ path('app_boutique_commandes') }}" class="dropdown-item">Commandes</a></li>
+                    <li><a href="{{ path('app_panier') }}" class="dropdown-item">Panier</a></li>
+                    <li><a href="{{ path('app_commande') }}" class="dropdown-item">Mes Commandes</a></li>
+                  </ul>
+                </div>
+
                 <div class="dropdown mt-1">
                   <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     Boutique
@@ -36,19 +45,38 @@
                     <li><a href="{{ path('app_boutique_commandes') }}" class="dropdown-item">Commandes</a></li>
                   </ul>
                 </div>
+
+                <div class="dropdown mt-1 m-3">
+                  <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Blog
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a href="{{ path('app_blog') }}" class="dropdown-item">Articles</a></li>
+                    <li><a href="{{ path('app_blog_add') }}" class="dropdown-item">Ajouter un article</a></li>
+                  </ul>
+                </div>
+
+
               </ul>
 
-              {% if not app.user %}
-                <div class="col-md-3 text-end">
-                  <a type="button" href="{{ path('app_login' )}}" class="btn btn-outline-primary me-2">Login</a>
-                  <a type="button" href="{{ path('app_register') }}" class="btn btn-primary">Sign-up</a>
-                </div>
-              {% else %}
-                <div class="col-md-3 text-end">
 
-                  <a type="button" href="{{ path('app_logout') }}" class="btn btn-danger">Logout</a>
+                <div class="col-md-3 text-end">
+                  <div class="dropdown mt-1">
+                    <button class="btn btn-sm btn-danger dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                      Security
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><a type="button" href="{{ path('app_login' )}}" class="dropdown-item">Login</a></li>
+                      <li><a type="button" href="{{ path('app_register') }}" class="dropdown-item">Sign-up</a></li>
+                      <li><a type="button" href="{{ path('app_logout') }}" class="dropdown-item">Logout</a></li>
+
+                    </ul>
+                  </div>
+
                 </div>
-              {% endif %}
+
+
+
 
             </header>
         </div>

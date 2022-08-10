@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/vendors/owl-carousel-2/owl.theme.default.min.css') }}">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
+    {% block style %}
+
+    {% endblock %}
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
@@ -97,10 +100,29 @@
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item"> <a class="nav-link" href="{{ path('app_admin_produit_categorie') }}">Catégorie de produit</a></li>
                         <li class="nav-item"> <a class="nav-link" href="{{ path('app_admin_code_promo') }}">Code promo</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Typography</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="#">Ventes effectués</a></li>
                     </ul>
                 </div>
             </li>
+
+            <li class="nav-item menu-items">
+                <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <span class="menu-icon">
+                <i class="mdi mdi-book-multiple"></i>
+              </span>
+                    <span class="menu-title">User Pages</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="auth">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ path('app_admin_blog_categorie') }}">Catégorie de blog</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ path('app_admin_blog') }}">Ajouter un article</a></li>
+
+                    </ul>
+                </div>
+            </li>
+
+
             <li class="nav-item menu-items">
                 <a class="nav-link" href="index.html">
               <span class="menu-icon">
@@ -142,24 +164,7 @@
                     <span class="menu-title">Icons</span>
                 </a>
             </li>
-            <li class="nav-item menu-items">
-                <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <span class="menu-icon">
-                <i class="mdi mdi-security"></i>
-              </span>
-                    <span class="menu-title">User Pages</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="auth">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-                        <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                        <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-                        <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                        <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                    </ul>
-                </div>
-            </li>
+
             <li class="nav-item menu-items">
                 <a class="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
               <span class="menu-icon">
@@ -318,5 +323,8 @@
 <!-- Custom js for this page -->
 <script src="{{ asset('admin/assets/js/dashboard.js') }}"></script>
 <!-- End custom js for this page -->
+{% block script %}
+
+{% endblock %}
 </body>
 </html>

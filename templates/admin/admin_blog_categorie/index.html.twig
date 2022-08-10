@@ -1,0 +1,64 @@
+{% extends 'base.admin.html.twig' %}
+{% block title %}Blog | Catégorie{% endblock %}
+{% block body %}
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h3 class="page-title"> Catégorie de produit </h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Blog</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Catégorie de Blog</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Liste des catégories</h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Libelle</th>
+
+                                    <th>Etat</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for cat in categories %}
+                                    <tr>
+                                        <td class="text-success"> {{ cat.libelle }} </td>
+                                        <td><label class="badge badge-success">{{ cat.etat }}</label></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 grid-margin ">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Ajouter une catégorie</h4>
+
+                        <form method="post" action="{{ path('app_admin_blog_categorie_add') }}">
+                            <div class="form-group row">
+                                <label for="exampleInputMobile" class="col-sm-3 col-form-label">Nom </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="exampleInputMobile" placeholder="Nom de la catégorie" name="nom">
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-primary mr-2">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}

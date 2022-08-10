@@ -1,0 +1,46 @@
+{% extends 'base.pages.html.twig' %}
+
+{% block title %}Ajouter un article{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <p><strong> Ajouter un article </strong></p>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" action="{{ path('app_admin_blog_add') }}">
+                <div class="mb-3">
+                    <label for="titre" class="form-label">Titre</label>
+                    <input type="text" class="form-control" id="titre" name="titre" aria-describedby="emailHelp">
+
+                </div>
+                <div class="mb-3">
+                    <label for="cat" class="form-label">Categorie</label>
+                    <select class="form-control" name="categorie" id="cat">
+                        {% for cat in categories %}
+                            <option value="{{ cat.id }}">{{ cat.libelle }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="desc" class="form-label">Description </label>
+                    <input type="text" class="form-control" id="exampleInputPassword1" name="description">
+
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Contenu</label>
+                    <textarea name="contenu" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="mb-3">
+
+                    <input type="file" class="form-control" name="image">
+                </div>
+
+                <input type="submit" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

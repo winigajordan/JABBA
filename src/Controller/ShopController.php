@@ -23,7 +23,7 @@ class ShopController extends AbstractController
         $this->btqRipo = $btqRipo;
     }
 
-    #[Route('/shop/{boutique}', name: 'app_shop', defaults: ['boutique'=>'all'])]
+    #[Route('/boutique/{boutique}', name: 'app_boutique', defaults: ['boutique'=>'all'])]
     public function index($boutique): Response
     {
         //dd($boutique);

@@ -8,13 +8,13 @@
                 <p>Filtre</p>
                 <ul class="list-group list-group-horizontal">
                     <li class="list-group-item">
-                        <a class="btn btn-sm btn-warning" href="{{ path('app_shop') }}">
+                        <a class="btn btn-sm btn-warning" href="{{ path('app_boutique') }}">
                             Tous les produits
                         </a>
                     </li>
                     {% for btq in boutiques %}
                     <li class="list-group-item">
-                        <a class="btn btn-sm btn-primary" href="{{ path('app_shop', {'boutique' : btq.slug}) }}">
+                        <a class="btn btn-sm btn-primary" href="{{ path('app_boutique', {'boutique' : btq.slug}) }}">
                             {{ btq.nom }}
                         </a>
                     </li>
@@ -47,7 +47,7 @@
                             <td>
                                 <div class="row ">
                                     <div class="col">
-                                        <form method="post" action="{{ path('add_item') }}">
+                                        <form method="post" action="{{ path('app_add_item') }}">
                                             <div class="row">
                                                 <div class="col">
                                                     <input type="number" class="form-control" value="1" name="qte">

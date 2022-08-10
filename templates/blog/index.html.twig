@@ -1,0 +1,123 @@
+{% extends 'base.pages.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+
+
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item">
+                        <a class="btn btn-sm btn-warning" href="{{ path('app_blog') }}">
+                            Tous les articles
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a class="btn btn-sm btn-primary" href="{{ path('app_blog', {'filter':'mine'}) }}">
+                            Mes articles
+                        </a>
+                    </li>
+
+                    {% for cat in categories %}
+                        <li class="list-group-item">
+                            <a class="btn btn-sm btn-primary" href="{{ path('app_blog', {'filter':cat.slug}) }}">
+                                {{ cat.libelle }}
+                            </a>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">Titre</th>
+                                <th scope="col">Auteur</th>
+                                <th scope="col">Date</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for art in articles %}
+                            <tr>
+                                <th scope="row">{{ art.titre }}</th>
+                                <td>{{ art.auteur.prenom }} {{ art.auteur.nom }}</td>
+                                <td>{{ art.date | date('d-m-Y m:H') }}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-primary" href="{{ path('app_blog_details', {'slug':art.slug}) }}">Commentaires</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% if selected is defined %}
+                    <div class="col">
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Details
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <p><strong>Titre : </strong> {{ selected.titre}} </p>
+                                        <p><strong>Auteur : </strong> {{ selected.auteur.prenom}} {{ selected.auteur.nom}} </p>
+                                        <p><strong>Description : </strong> {{ selected.description}} </p>
+                                        <p><strong>Date : </strong> {{ selected.date | date('d-m-Y m:H')}} </p>
+                                        <p><strong>Contenu : </strong> {{ selected.contenu}} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Commentaires
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        {% for comment in selected.commentaires %}
+                                            <div class="card card-inverse-primary mt-1 p-2">
+                                                <p><strong>Auteur : </strong> {{ comment.auteur.prenom}} {{ comment.auteur.nom}} </p>
+                                                <p><strong>Date : </strong> {{ comment.date | date('d-m-Y m:H')}}  </p>
+                                                <p><strong>Contenu : </strong> {{ comment.contenu}} </p>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Faire un commentaire
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <form method="post" action="{{ path('app_blog_commenter') }}">
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Votre commentaire</label>
+                                                <input type="text" name="slug" value="{{ selected.slug }}" hidden>
+                                                <textarea name="commentaire" class="form-control" rows="2"></textarea>
+                                            </div>
+                                            <input type="submit" class="btn btn-primary">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -21,6 +21,7 @@ class PanierController extends AbstractController
         $this->prodRipo = $prodRipo;
     }
 
+
     #[Route('/panier', name: 'app_panier')]
     public function index(SessionInterface $session): Response
     {

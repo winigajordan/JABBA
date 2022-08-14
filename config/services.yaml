@@ -6,6 +6,7 @@
 parameters:
     products: '%kernel.project_dir%/public/files/images/products'
     blog : '%kernel.project_dir%/public/files/images/blog'
+    facture : '%kernel.project_dir%/public/files/pdf/factures'
 
 services:
     # default configuration for services in *this* file

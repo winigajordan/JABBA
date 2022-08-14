@@ -22,7 +22,7 @@
 
               <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
 
-                <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+                <li><a href="{{ path('app_accueil') }}" class="nav-link px-2 link-secondary">Home</a></li>
 
                 <div class="dropdown mt-1 m-3">
                   <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -30,6 +30,7 @@
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a href="{{ path('app_boutique') }}" class="dropdown-item">Shop</a></li>
+                    <li><a href="{{ path('app_favoris') }}" class="dropdown-item">Favoris</a></li>
                     <li><a href="{{ path('app_boutique_commandes') }}" class="dropdown-item">Commandes</a></li>
                     <li><a href="{{ path('app_panier') }}" class="dropdown-item">Panier</a></li>
                     <li><a href="{{ path('app_commande') }}" class="dropdown-item">Mes Commandes</a></li>

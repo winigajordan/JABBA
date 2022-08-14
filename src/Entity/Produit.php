@@ -52,9 +52,13 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: DetailsCommande::class)]
     private Collection $detailsCommandes;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Favoris::class)]
+    private Collection $favoris;
+
     public function __construct()
     {
         $this->detailsCommandes = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -218,6 +222,36 @@ class Produit
             // set the owning side to null (unless already changed)
             if ($detailsCommande->getProduit() === $this) {
                 $detailsCommande->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Favoris>
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(Favoris $favori): self
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris[] = $favori;
+            $favori->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(Favoris $favori): self
+    {
+        if ($this->favoris->removeElement($favori)) {
+            // set the owning side to null (unless already changed)
+            if ($favori->getProduit() === $this) {
+                $favori->setProduit(null);
             }
         }
 

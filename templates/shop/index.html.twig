@@ -2,6 +2,9 @@
 {% block title %} Shop {% endblock %}
 
 {% block body %}
+
+
+    <!--
     <div class="container">
         <div class="card">
             <div class="card-header">
@@ -72,6 +75,98 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+    sfqeb
+    -->
+
+    <div class="mini-menu d-flex justify-content-end align-items-center " style="width: 43%; height:100px;">
+        <a class="navbar-brand me-5" href="#">Femmes</a>
+        <a class="navbar-brand me-5" href="#">Hommes</a>
+        <a class="navbar-brand me-5" href="#">Enfants</a>
+        <a class="navbar-brand me-5" href="#">Célébrités</a>
+    </div>
+
+    <div class="cards d-flex flex-column justify-content-between" style="padding-left: 5%;padding-right: 5%; ">
+        <hr>
+        <div class="d-flex justify-content-between pb-4" style="padding-left: 35%;padding-right: 0.47%; height: 100px;">
+            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width:15%">
+                <option>Marque</option>
+                <option value="Femmes">Femmes</option>
+                <option value="Hommes">Hommes</option>
+                <option value="Enfants">Enfants</option>
+                <option value="Celebrites">Célébrités</option>
+            </select>
+            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width:15%">
+                <option>Marque</option>
+                <option value="Femmes">Femmes</option>
+                <option value="Hommes">Hommes</option>
+                <option value="Enfants">Enfants</option>
+                <option value="Celebrites">Célébrités</option>
+            </select>
+            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width:15%">
+                <option>prix</option>
+                <option value="Femmes">Femmes</option>
+                <option value="Hommes">Hommes</option>
+                <option value="Enfants">Enfants</option>
+                <option value="Celebrites">Célébrités</option>
+            </select>
+            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width:15%">
+                <option>Etat</option>
+                <option value="Femmes">Femmes</option>
+                <option value="Hommes">Hommes</option>
+                <option value="Enfants">Enfants</option>
+                <option value="Celebrites">Célébrités</option>
+            </select>
+            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width:15%">
+                <option>Taille</option>
+                <option value="Femmes">Femmes</option>
+                <option value="Hommes">Hommes</option>
+                <option value="Enfants">Enfants</option>
+                <option value="Celebrites">Célébrités</option>
+            </select>
+            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width:15%">
+                <option>Couleur</option>
+                <option value="Femmes">Femmes</option>
+                <option value="Hommes">Hommes</option>
+                <option value="Enfants">Enfants</option>
+                <option value="Celebrites">Célébrités</option>
+            </select>
+        </div>
+        <!-- mettre au dernier contenair mb-5 -->
+        <div class="row d-flex mt-5 mb-5">
+            {% for prod in produits %}
+            <div class="card mt-3 border-0 col-4" style="width: 25%;">
+                <div class="image-fluid d-flex mb-3">
+                    <img src="{{ ('frontend/assets/Rectangle48.png') }}" class="rounded-circle" height="50px" width="50px">
+                    <p class="text-center ms-3 mt-2">{{ prod.boutique.nom }}</p>
+                </div>
+                <img src="{{ asset('/files/images/products/') }}{{ prod.image }}" style="height: 350px; width: 415px" class="card-img-top" alt="...">
+                <label>
+
+                </label>
+                <div class="card-body">
+                    <p class="text-center"> <strong>{{ prod.libelle }}</strong> </p>
+                    <p class="text-center">{% if prod.isSolde %} {{ prod.newMontant }} {% else %} {{ prod.montant }} {% endif %}</p>
+                    <p class="text-center">{{ prod.taille }}</p>
+                    <div class=" d-flex justify-content-center">
+                        <div class="col-6">
+                            <a class="btn btn-warning w-50 rounded-pill d-flex align-items-center justify-content-between border-0" href="#" role="button" style="height:50px;background-color:#3A36DB;margin-left:25%; width: 150px">
+                                <span class="mr-2" style="margin-right: 10px">Favoris</span>
+                                <img style="margin-right: 10px" src="{{ asset('frontend/assets/Vector.png') }}" alt="">
+                            </a>
+                        </div>
+                        <div class="col-6" >
+                            <a class="btn w-50 rounded-pill d-flex align-items-center justify-content-between border-0" href="#" role="button" style="height:50px;background-color:#3A36DB;margin-left:25%; width: 150px">
+                                <span class="mr-2" style="margin-right: 10px">Ajouter</span>
+                                <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock body %}

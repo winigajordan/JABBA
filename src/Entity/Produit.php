@@ -55,6 +55,9 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Favoris::class)]
     private Collection $favoris;
 
+    #[ORM\Column]
+    private ?int $views = null;
+
     public function __construct()
     {
         $this->detailsCommandes = new ArrayCollection();
@@ -254,6 +257,18 @@ class Produit
                 $favori->setProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getViews(): ?int
+    {
+        return $this->views;
+    }
+
+    public function setViews(int $views): self
+    {
+        $this->views = $views;
 
         return $this;
     }

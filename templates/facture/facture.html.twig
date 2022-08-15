@@ -62,12 +62,12 @@
                             <th>Libelle</th>
                             <th>Qtanatité</th>
                             <th>Prix unitaire</th>
-                            <th width="140">Prix total</th>
+                            <th >Prix total</th>
                         </tr>
                     </thead>
 
                     <tbody class="text-95 text-secondary-d3">
-                        <tr></tr>
+
                         {% for dtl in cmd.detailsCommandes %}
                         <tr>
                             <td>{{ dtl.produit.slug }}</td>

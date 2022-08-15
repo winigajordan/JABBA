@@ -1,0 +1,37 @@
+{% extends 'base.pages.html.twig' %}
+{% block title %} Favoris {% endblock %}
+{% block body %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Liste de mes articles favoris
+        </div>
+        <div class="card-body">
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Nom</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for fav in favoris %}
+                <tr>
+                    <th scope="row">
+                        <img src="{{ asset('/files/images/products/') }}{{ fav.produit.image }}" width="50" height="50">
+                    </th>
+                    <td>{{ fav.produit.libelle }}</td>
+                    <td>
+                        <a class="btn btn-outline-warning" href="{{ path('app_favoris_update', {'slug':fav.produit.slug}) }}">
+                    Retirer des favoris
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

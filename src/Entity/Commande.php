@@ -38,6 +38,9 @@ class Commande
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     private ?Code $code = null;
 
+    #[ORM\OneToOne(mappedBy: 'commande', cascade: ['persist', 'remove'])]
+    private ?Facture $facture = null;
+
     public function __construct()
     {
         $this->detailsCommandes = new ArrayCollection();
@@ -146,6 +149,23 @@ class Commande
     public function setCode(?Code $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    public function getFacture(): ?Facture
+    {
+        return $this->facture;
+    }
+
+    public function setFacture(Facture $facture): self
+    {
+        // set the owning side of the relation if necessary
+        if ($facture->getCommande() !== $this) {
+            $facture->setCommande($this);
+        }
+
+        $this->facture = $facture;
 
         return $this;
     }

@@ -1,0 +1,56 @@
+{% extends 'base.pages.html.twig' %}
+
+{% block title %}Adresse{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="jumbotron">
+        <div class="card">
+            <div style="height: 250px">
+            </div>
+            <form class="p-5 form-floating" method="post" action="{{ path('app_adresse_add') }}">
+
+                <h4>Ajouter une adresse</h4>
+                <div class="mb-3 mt-3">
+                    <label for="exampleFormControlInput1" class="form-label">Zone</label>
+                    <select class="form-select" aria-label="Default select example" name="zone">
+                        {% for zone in zones %}
+                        <option value="{{ zone.slug }}">{{ zone.libelle }} | {{ zone.quartiers }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-floating mb-3 mt-3">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="pays">
+                    <label for="exampleFormControlInput1" class="form-label">Pays</label>
+                </div>
+
+                <div class="form-floating mb-3">
+
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="ville">
+                    <label for="exampleFormControlInput1" class="form-label">Ville</label>
+                </div>
+
+                <div class="form-floating mb-3">
+
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="code">
+                    <label for="exampleFormControlInput1" class="form-label">Code</label>
+                </div>
+
+                <div class="form-floating mb-3">
+
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="quartier">
+                    <label for="exampleFormControlInput1" class="form-label">Quartier</label>
+                </div>
+
+                <div class="form-floating mb-3">
+
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="precision"></textarea>
+                    <label for="exampleFormControlTextarea1" class="form-label">Precision</label>
+                </div>
+                <input type="submit" class="form-control">
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

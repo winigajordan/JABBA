@@ -35,15 +35,21 @@ class Commande
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: DetailsCommande::class)]
     private Collection $detailsCommandes;
 
-    #[ORM\ManyToOne(inversedBy: 'commandes')]
-    private ?Code $code = null;
+
 
     #[ORM\OneToOne(mappedBy: 'commande', cascade: ['persist', 'remove'])]
     private ?Facture $facture = null;
 
+    #[ORM\OneToOne(mappedBy: 'commande', cascade: ['persist', 'remove'])]
+    private ?Livraison $livraison = null;
+
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: CommandeReduction::class)]
+    private Collection $commandeReductions;
+
     public function __construct()
     {
         $this->detailsCommandes = new ArrayCollection();
+        $this->commandeReductions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,17 +147,7 @@ class Commande
         return $this;
     }
 
-    public function getCode(): ?Code
-    {
-        return $this->code;
-    }
 
-    public function setCode(?Code $code): self
-    {
-        $this->code = $code;
-
-        return $this;
-    }
 
     public function getFacture(): ?Facture
     {
@@ -166,6 +162,53 @@ class Commande
         }
 
         $this->facture = $facture;
+
+        return $this;
+    }
+
+    public function getLivraison(): ?Livraison
+    {
+        return $this->livraison;
+    }
+
+    public function setLivraison(Livraison $livraison): self
+    {
+        // set the owning side of the relation if necessary
+        if ($livraison->getCommande() !== $this) {
+            $livraison->setCommande($this);
+        }
+
+        $this->livraison = $livraison;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommandeReduction>
+     */
+    public function getCommandeReductions(): Collection
+    {
+        return $this->commandeReductions;
+    }
+
+    public function addCommandeReduction(CommandeReduction $commandeReduction): self
+    {
+        if (!$this->commandeReductions->contains($commandeReduction)) {
+            $this->commandeReductions[] = $commandeReduction;
+            $commandeReduction->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeReduction(CommandeReduction $commandeReduction): self
+    {
+        if ($this->commandeReductions->removeElement($commandeReduction)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeReduction->getCommande() === $this) {
+                $commandeReduction->setCommande(null);
+            }
+        }
 
         return $this;
     }

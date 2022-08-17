@@ -41,6 +41,7 @@ class AdminProduitCategorieController extends AbstractController
     public function addCategorie(Request $request){
         $cat = new CategorieProduit();
         $cat -> setLibelle($request->request->get('nom'));
+        $cat -> setSlug(uniqid('catProd-'));
         $this -> em -> persist($cat);
         $this->em->flush();
         return $this->redirectToRoute('app_admin_produit_categorie');

@@ -102,6 +102,11 @@ class Client extends User
         return $this;
     }
 
+    public function getDefaultAdresse(): ?Adresse{
+        $adds = $this->getAdresse();
+        return $adds[0];
+    }
+
     public function getWallet(): ?Wallet
     {
         return $this->wallet;

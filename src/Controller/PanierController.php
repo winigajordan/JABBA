@@ -54,9 +54,7 @@ class PanierController extends AbstractController
 
    #[Route('/panier/add/item', name: 'app_add_item')]
     public function panierAddItem(SessionInterface $session, Request $request){
-       if (!$this->getUser()){
-           return $this->redirectToRoute('app_login');
-       }
+
        //dd($request->request);
        $panier = $session->get('panier', []);
        $qte = $request->request->get('qte');
@@ -72,4 +70,14 @@ class PanierController extends AbstractController
        $session->set('panier', $panier);
        return $this->redirectToRoute('app_panier');
    }
-}
+
+    #[Route('/panier/remove/{slug}', name: 'app_remove_item')]
+    public function panierRemoveItem(SessionInterface $session, $slug)
+    {
+        $panier = $session->get('panier', []);unset($panier[$slug]);
+        unset($panier[$slug]);
+        $session->set('panier', $panier);
+        return $this->redirectToRoute('app_panier');
+    }
+
+    }

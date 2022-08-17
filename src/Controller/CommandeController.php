@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Commande;
+use App\Entity\CommandeReduction;
 use App\Entity\DetailsCommande;
+use App\Entity\Livraison;
 use App\Entity\Vente;
 use App\Repository\ClientRepository;
 use App\Repository\CodeRepository;
@@ -38,22 +40,50 @@ class CommandeController extends AbstractController
     #[Route('/commande', name: 'app_commande')]
     public function index(): Response
     {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('commande/index.html.twig', [
             'commandes'=>$this->getUser()->getCommandes()
         ]);
     }
 
-    #[Route('/commande/add', name: 'app_commande_add', methods: 'post')]
-    public function add(Request $request, SessionInterface $session)
+    #[Route('/commande/add', name: 'app_commande_add')]
+    public function add(SessionInterface $session, Request $request)
     {
+        if (!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
 
        $cartItem = $session->get('panier');
        $commande = new Commande();
-       $commande -> setEtat('EN COURS');
        $commande -> setSlug(uniqid('cmd-'));
        $commande -> setClient($this->getUser());
        $commande -> setDate(new \DateTime());
+
+       //mise à jour de l'état de la commande
+       if($request->request->get('pay')){
+           $commande -> setEtat('PAY');
+       } else {
+           $commande -> setEtat('EN COURS');
+       }
        $total = 0;
+
+        $coupons = $session->get('coupons', []);
+        $totalReduction = 0;
+        if (count($coupons)>0){
+            foreach ($coupons as $key=>$value){
+                $cr = new CommandeReduction();
+                $cr->setCommande($commande);
+                $cr->setCode($this->codeRipo->findOneBy(['code'=>$value['code']]));
+                $this->em->persist($cr);
+                if ($totalReduction<1){
+                    $totalReduction += $value['reduction'];
+                }
+            }
+            $total = $total - $total*$totalReduction;
+        }
+
        foreach ($cartItem as $slug => $qte){
           $details = new DetailsCommande();
           $prod = $this->prodRipo->findOneBy(['slug'=>$slug]);
@@ -64,9 +94,9 @@ class CommandeController extends AbstractController
           $details -> setSlug(uniqid('dtls-'));
 
           if($prod->isIsSolde()){
-              $details->setPrix($prod->getNewMontant()*$qte) ;
+              $details->setPrix(($prod->getNewMontant() - $prod->getNewMontant()*$totalReduction)*$qte) ;
           } else {
-            $details->setPrix($prod->getMontant()*$qte) ;
+            $details->setPrix(($prod->getMontant() - $prod->getMontant()*$totalReduction)*$qte) ;
           }
           $total += $details->getPrix();
           $this->em->persist($details);
@@ -92,22 +122,21 @@ class CommandeController extends AbstractController
            $this -> em -> persist($adminWallet);
 
        }
-       $coupon = $request->request->get('code');
-       if ($coupon) {
-           $code = $this->codeRipo->findOneBy(['code'=>$coupon, 'etat'=>'VALIDE']);
-           if ($code){
-               $commande->setCode($code);
-               $commande->setMontant($total - $total * $code->getReduction());
-           } else {
-               $this->addFlash('warning', 'Code promo erroné');
-               return $this->redirectToRoute('app_panier');
-           }
-       } else {
-           $commande -> setMontant($total);
-       }
+
+
+       $livraison = new Livraison();
+       $livraison->setCommande($commande);
+       $livraison->setAdresse($this->getUser()->getDefaultAdresse());
+       $this->em->persist($livraison);
+
+       $commande->setMontant($total + $this->getUser()->getDefaultAdresse()->getZone()->getMontant());
+
+
+
        $this->em->persist($commande);
        $this->em->flush();
        $session->set('panier', []);
+       $session->set('coupons', []);
        //dd('done');
        return $this->redirectToRoute('app_commande');
     }

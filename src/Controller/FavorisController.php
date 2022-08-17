@@ -53,6 +53,6 @@ class FavorisController extends AbstractController
             $this->em->persist($newFav);
         }
         $this->em->flush();
-        return $this->redirectToRoute('app_favoris');
+        return $this->redirectToRoute('app_boutique');
     }
 }

@@ -1,0 +1,118 @@
+{% extends 'base.pages.html.twig' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block body %}
+    <div class="contenair" style="background:#F7F7F7">
+        <section action="" method="post" class="mt-5 mb-5 d-flex">
+            <div class="card-left" style="width:52%;margin:6% 0% 0% 3%;">
+                <div class="card-adresse bg-white" style="padding:5% 10% 5% 5%">
+                    <h3 class="fw-bold">Adresse de livraison</h3>
+                    <div class="row mt-5">
+                        <label for="text" id="" class="col">Prénom
+                            <input type="text" value="{{ user.prenom }}" disabled style="padding: 10px">
+                        </label>
+                        <label for="" id="" class="col">Nom
+                            <input type="text" value="{{ user.nom }}" disabled style="padding: 10px">
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label for="" id="" class="col">Pays
+                            <input type="text" value="{{ user.getDefaultAdresse.pays }}" disabled style="padding: 10px">
+                        </label>
+                        <label for="" id="" class="col">Ville
+                            <input type="text" value="{{ user.getDefaultAdresse.ville }}" disabled style="padding: 10px">
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label for="" id="" class="col">Quartier
+                            <input type="text" value="{{ user.getDefaultAdresse.quartier }}" disabled style="padding: 10px">
+                        </label>
+                        <label for="" id="" class="col">Numéro
+                            <input type="text" value="{{ user.telephone }}" disabled style="padding: 10px">
+                        </label>
+                    </div>
+                    <label for="mail" id="email">mail
+                        <input type="text" value="{{ user.email }}" disabled style="padding: 10px">
+                    </label>
+                </div>
+                <form method="post" action="{{ path('app_coupon') }}">
+                <div class="card-code-promo bg-white mt-5" style="padding:5% 10% 5% 5%;height:300px">
+                    <h3 class="fw-bold">Code promo</h3>
+                    <label for="mail" id="email" class="code mt-2">
+                        <input type="text" name="code" id="mail" style="padding: 10px">
+                    </label>
+                    <input type="submit" class="btn btn-primary text-light rounded float-end" value="Envoyer">
+                </div>
+                </form>
+            </div>
+            <div class="card-right bg-white" style="width:48%;margin:6% 3% 0% 3%;padding:2% 2% 2% 2%">
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Erreur</strong> {{ flashMessage }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong> ✅ </strong> {{ flashMessage }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+
+                <h3 class="fw-bold">Votre commande</h3>
+                <table class="mt-5 w-100">
+                    <tr>
+                        <th>Produits</th>
+                        <th>Total</th>
+                    </tr>
+                    {% for prod in cardItem %}
+                    <tr class="border-0">
+                        <td>{{ prod.qte}} x {{ prod.item.libelle }}</td>
+                        <td class="border-start">{{ prod.prix }} FCFA</td>
+                    </tr>
+                    {% endfor %}
+                    {% if coupons|length > 0 %}
+                    <tr>
+                        <th>Reduction</th>
+                    </tr>
+                        {% for coupon in coupons %}
+                            <tr class="border-0">
+                                <td>{{coupon.code}}</td>
+                                <td class="border-start">{{ coupon.reduction * 100 }} %</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    <tr>
+                        <th>Livraison</th>
+                    </tr>
+                    <tr class="border-0">
+                        <td>Expédition {{ user.getDefaultAdresse.zone.libelle  }}</td>
+                        <td class="border-start">{{ user.getDefaultAdresse.zone.montant  }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <th>{{ total }} FCFA</th>
+                    </tr>
+                </table>
+                <form method="post" action="{{ path('app_commande_add') }}">
+                <h3 class="fw-bold mt-5">Mode de paiement</h3>
+                <div class="form-check mt-5">
+                    <input class="form-check-input" type="radio" name="livraison" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Paiement à la livraison
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="pay" id="flexRadioDefault2" checked>
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Paiement mobile
+                    </label>
+                </div>
+                <input type="submit" class="btn btn-primary text-light mt-5" value="Commander">
+                </form>
+            </div>
+        </section>
+    </div>
+{% endblock %}

@@ -4,87 +4,12 @@
 {% block body %}
 
 
-    <!--
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <p>Filtre</p>
-                <ul class="list-group list-group-horizontal">
-                    <li class="list-group-item">
-                        <a class="btn btn-sm btn-warning" href="{{ path('app_boutique') }}">
-                            Tous les produits
-                        </a>
-                    </li>
-                    {% for btq in boutiques %}
-                    <li class="list-group-item">
-                        <a class="btn btn-sm btn-primary" href="{{ path('app_boutique', {'boutique' : btq.slug}) }}">
-                            {{ btq.nom }}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="card-body">
-                <p>Liste des articles</p>
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Prix</th>
-                        <th scope="col">Catégorie</th>
-                        <th scope="col">Solde</th>
-                        <th scope="col">Boutique</th>
-                        <th scope="col">Image</th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for prod in produits %}
-                        <tr>
-                            <th  >{{ prod.libelle }}</th>
-                            <td>{% if prod.isSolde %} {{ prod.newMontant }} {% else %} {{ prod.montant }} {% endif %}</td>
-                            <td>{{ prod.categorie.libelle }}</td>
-                            <td>{% if prod.isSolde %} OUI {% else %} NON{% endif %}</td>
-                            <td>{{ prod.boutique.nom }}</td>
-                            <td> <img src="{{ asset('/files/images/products/') }}{{ prod.image }}" width="50" height="50"></td>
-                            <td>
-                                <div class="row ">
-                                    <div class="col">
-                                        <form method="post" action="{{ path('app_add_item') }}">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <input type="number" class="form-control" value="1" name="qte">
-                                                    <input type="text" name="id" hidden value="{{ prod.slug }}">
 
-                                                </div>
-                                                <div class="col">
-                                                    <input type="submit" class="btn btn-sm btn-primary" href="#" value="Ajout au panier">
-                                                </div>
-                                            </div>
 
-                                        </form>
-                                    </div>
-
-                                    <div class="col">
-                                        <a class="btn btn-sm btn-primary" href="{{ path('app_favoris_update', {'slug':prod.slug}) }}"> + Favoris </a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    sfqeb
-    -->
-
-    <div class="mini-menu d-flex justify-content-end align-items-center " style="width: 43%; height:100px;">
-        <a class="navbar-brand me-5" href="#">Femmes</a>
-        <a class="navbar-brand me-5" href="#">Hommes</a>
-        <a class="navbar-brand me-5" href="#">Enfants</a>
-        <a class="navbar-brand me-5" href="#">Célébrités</a>
+    <div class="mini-menu d-flex justify-content-end align-items-center " style="width: 50%; height:100px;">
+        {% for cat in categories %}
+        <a class="navbar-brand me-5" href="{{ path('app_boutique', {'filter':cat.slug}) }}">{{ cat.libelle }}</a>
+        {% endfor %}
     </div>
 
     <div class="cards d-flex flex-column justify-content-between" style="padding-left: 5%;padding-right: 5%; ">
@@ -111,13 +36,7 @@
                 <option value="Enfants">Enfants</option>
                 <option value="Celebrites">Célébrités</option>
             </select>
-            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width:15%">
-                <option>Etat</option>
-                <option value="Femmes">Femmes</option>
-                <option value="Hommes">Hommes</option>
-                <option value="Enfants">Enfants</option>
-                <option value="Celebrites">Célébrités</option>
-            </select>
+
             <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width:15%">
                 <option>Taille</option>
                 <option value="Femmes">Femmes</option>
@@ -125,39 +44,35 @@
                 <option value="Enfants">Enfants</option>
                 <option value="Celebrites">Célébrités</option>
             </select>
-            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width:15%">
-                <option>Couleur</option>
-                <option value="Femmes">Femmes</option>
-                <option value="Hommes">Hommes</option>
-                <option value="Enfants">Enfants</option>
-                <option value="Celebrites">Célébrités</option>
-            </select>
+
         </div>
+
         <!-- mettre au dernier contenair mb-5 -->
         <div class="row d-flex mt-5 mb-5">
             {% for prod in produits %}
             <div class="card mt-3 border-0 col-4" style="width: 25%;">
                 <div class="image-fluid d-flex mb-3">
-                    <img src="{{ ('frontend/assets/Rectangle48.png') }}" class="rounded-circle" height="50px" width="50px">
-                    <p class="text-center ms-3 mt-2">{{ prod.boutique.nom }}</p>
+
+                    <img src="{{ asset('frontend/assets/Rectangle48.png') }}" class="rounded-circle" height="50px" width="50px">
+                    <a href="{{ path('app_boutique', {'filter':prod.boutique.slug}) }}" style="color: black">
+                        <p class="text-center ms-3 mt-2">{{ prod.boutique.nom }}</p>
+                    </a>
                 </div>
                 <img src="{{ asset('/files/images/products/') }}{{ prod.image }}" style="height: 350px; width: 415px" class="card-img-top" alt="...">
-                <label>
 
-                </label>
                 <div class="card-body">
                     <p class="text-center"> <strong>{{ prod.libelle }}</strong> </p>
                     <p class="text-center">{% if prod.isSolde %} {{ prod.newMontant }} {% else %} {{ prod.montant }} {% endif %}</p>
                     <p class="text-center">{{ prod.taille }}</p>
                     <div class=" d-flex justify-content-center">
                         <div class="col-6">
-                            <a class="btn btn-warning w-50 rounded-pill d-flex align-items-center justify-content-between border-0" href="#" role="button" style="height:50px;background-color:#3A36DB;margin-left:25%; width: 150px">
+                            <a class="btn btn-warning w-50 rounded-pill d-flex align-items-center justify-content-between border-0" href="{{ path('app_favoris_update', {'slug':prod.slug}) }}" role="button" style="height:50px;background-color:#3A36DB;margin-left:25%; width: 150px">
                                 <span class="mr-2" style="margin-right: 10px">Favoris</span>
                                 <img style="margin-right: 10px" src="{{ asset('frontend/assets/Vector.png') }}" alt="">
                             </a>
                         </div>
                         <div class="col-6" >
-                            <a class="btn w-50 rounded-pill d-flex align-items-center justify-content-between border-0" href="#" role="button" style="height:50px;background-color:#3A36DB;margin-left:25%; width: 150px">
+                            <a class="btn w-50 rounded-pill d-flex align-items-center justify-content-between border-0" href="{{ path('app_details_produit', {'slug':prod.slug}) }}" role="button" style="height:50px;background-color:#3A36DB;margin-left:25%; width: 150px">
                                 <span class="mr-2" style="margin-right: 10px">Ajouter</span>
                                 <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
                             </a>

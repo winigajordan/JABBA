@@ -1,51 +1,46 @@
 {% extends 'base.pages.html.twig' %}
 {% block title %} Panier {% endblock %}
+
 {% block body %}
-    <div class="container">
-        <div class="card p-3">
-            <div class="card-header">
-                <p>Panier</p>
+
+    <div class="ligne mb-5"  style="padding: 0% 8% 0% 6.7%">
+        <hr>
+    </div>
+    <h2 class="fw-bold" style="padding-left:8%">Articles(3)</h2>
+
+    <div class="contenair-group d-flex justify-content-evenly mt-5 mb-5">
+        <div class="card-left d-flex flex-column justify-content-between"  style="width:50%">
+            {% for prod in items %}
+            <form method="post" action="{{ path('app_add_item') }}">
+            <div class="article d-flex justify-content-evenly align-items-center">
+                <img src="{{ asset('/files/images/products/') }}{{ prod.item.image }}" alt="" width="60" height="60">
+                <div class="div description-article d-flex flex-column">
+                    <h5>{{ prod.item.libelle }}</h5>
+                </div>
+                <span>{% if prod.item.isSolde %} {{ prod.item.newMontant }} {% else %} {{ prod.item.montant }} {% endif %}</span>
+                <input type="number" class="form-control" style="width: 100px" min="0" value="{{ prod.qte }}" name="qte" >
+                <input type="text" name="id" hidden value="{{ prod.item.slug }}">
+                <input type="submit" class="btn btn-sm btn-primary" value="Modifier">
+                <a class="btn btn-sm btn-warning" href="{{ path('app_remove_item',{'slug':prod.item.slug}) }}">
+                    Retirer du panier
+                </a>
             </div>
-           <div class="card-body">
-               <div class="row">
-                   <div class="col-8">
-                       <table class="table table-striped table-hover">
-                           <thead>
-                           <tr>
-                               <th scope="col"></th>
-                               <th scope="col">Nom</th>
-                               <th scope="col">Quantité</th>
-                               <th scope="col">Prix</th>
-                               <th scope="col"></th>
-                           </tr>
-                           </thead>
-                           <tbody>
-                           {% for prod in items %}
-                           <tr>
-                               <th scope="row"><img src="{{ asset('/files/images/products/') }}{{ prod.item.image }}" width="50" height="50"></th>
-                               <td>{{ prod.item.libelle}}</td>
-                               <td>{{ prod.qte}}</td>
-                               <td>{% if prod.item.isSolde %} {{ prod.item.newMontant * prod.qte}} {% else %} {{ prod.item.montant * prod.qte}} {% endif %}</td>
-                               <td> <input type="submit" class="btn btn-sm btn-primary" value="Modifier la qte" ></td>
-                           </tr>
-                           {% endfor %}
+            </form>
+            {% endfor %}
 
-                           </tbody>
-                       </table>
-                   </div>
-                   <div class="col-4">
-                       <p>
-                           Montant total :  <strong>{{ total }} XOF</strong>
-                       </p>
-                       <p> Appliquer une code promo </p>
-                       <form method="post" action="{{ path('app_commande_add') }}">
-                           <input type="text" class="form-control" name="code">
-                           <input type="submit" class="form-control mt-3 btn-primary" value="Valider ma commande">
-                       </form>
-                   </div>
-               </div>
+        </div>
+        <div class="card-right" style="width:35%">
+            <form action="" method="">
 
-           </div>
+                <div class="row">
+                    <div class="facture d-flex justify-content-between">
+                        <h5>Total</h5>
+                        <span> {{ total }} FCFA</span>
+                    </div>
+                    <a href="{{ path('app_checkout') }}" class="btn btn-primary">Valider le panier</a>
+                </div>
+            </form>
         </div>
     </div>
+
 {% endblock %}

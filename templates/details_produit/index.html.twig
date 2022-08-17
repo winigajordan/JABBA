@@ -1,20 +1,104 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.pages.html.twig' %}
 
-{% block title %}Hello DetailsProduitController!{% endblock %}
+{% block title %}Details produit {% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="ligne mb-5"  style="padding: 0% 8% 0% 6.7%">
+        <hr>
+    </div>
+    <div class="card-body shadow d-flex justify-content-between rounded" style="margin:10% 8% 0% 7%;padding: 0% 2% 0% 2%">
+        <div class="card-left w-50 d-flex flex-column justify-content-between" style="padding: 2% 5% 2% 0%">
+            <img src="{{ asset('/files/images/products/') }}{{ prod.image }}" height="600px" class="bs-5">
+            <!--
+            <div class="mini-images d-flex justify-content-evenly mt-2" style="padding: 0% 10% 0% 10%">
+                <img src="{{ asset('frontend/assets/sac.png') }}" height="90px">
+                <img src="{{ asset('frontend/assets/sac.png') }}" height="90px">
+                <img src="{{ asset('frontend/assets/sac.png') }}" height="90px">
+            </div>
+            -->
+        </div>
+        <div class="card-right w-50" style="padding: 2% 0% 0% 4%">
+            <div class="contenair-menu d-flex justify-content-between">
+                <div class="info-user d-flex justify-content-between align-items-center" style="width:40%">
+                    <img src="{{ asset('frontend/assets/Rectangle48.png') }}" alt="" class="cercle" height="50" width="50" style="border: 1px solid transparent;border-radius:100%;">
+                    <span style="color:black">{{ prod.boutique.nom }}</span>
+                </div>
+                <a href="" class="btn btn-primary float-end rounded h-25 w-25" style="box-shadow: 3px 6px 9px 1px gray">suivre</a>
+            </div>
+            <div class="contenair-body h-50">
+                <div class="info-article d-flex flex-column justify-content-evenly h-75">
+                    <h3 class="fw-bold" style="color:black">{{ prod.libelle }}</h3>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+                    <span>Taille- {{ prod.taille }}</span>
+                    <span>Prix- <strong>{% if prod.isSolde %} {{ prod.newMontant }} {% else %} {{ prod.montant }} {% endif %} </strong> </span>
+                </div>
+                <form method="post" action="{{ path('app_add_item') }}">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/STAGE ISM/PROJET JABBA/JABBA/src/Controller/DetailsProduitController.php'|file_link(0) }}">src/Controller/DetailsProduitController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/STAGE ISM/PROJET JABBA/JABBA/templates/details_produit/index.html.twig'|file_link(0) }}">templates/details_produit/index.html.twig</a></code></li>
-    </ul>
-</div>
+                <div class="quantite d-flex justify-content-between" style="width:40%" >
+                    <p>Quantite</p>
+                    <div class="bouton-quantite d-flex">
+                        <input type="text" name="id" hidden value="{{ prod.slug }}">
+                        <input style="border : 1px; border-radius:10px; padding: 10px; background-color:rgb(202, 196, 196)" type="number" name="qte" value="1" min="0" max="100"/>
+                    </div>
+                </div>
+                <div class="button mt-2">
+                    <input type="submit" class="btn btn-primary text-light" value="Ajouter au panier">
+                    <a href="" class="btn btn-primary text-light">Acheter</a>
+                    <img src="{{ asset('/files/images/products/') }}{{ prod.image }}" alt="" class="cercle" height="50" width="50" style="border: 1px solid transparent;border-radius:100%;">
+                </div>
+                </form>
+                <p class="text-start mt-4">Description : <br> {{ prod.description }}</p>
+            </div>
+        </div>
+    </div>
+
+    {% if produits|length > 0 %}
+    <div class="card-text d-flex flex-column" style="height: 900px">
+        <h2 class="mb-5 fw-bold">Articles similaires</h2>
+        <div id="carousel-vitrine" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner shadow-sm">
+                <!-- Caroussel 1 -->
+                <div class="carousel-item active">
+                    <div class="cards-wrapper d-flex ">
+                        {% for p in produits %}
+                        <div class="card mt-3 border-0 col-4" style="width: 25%;">
+                            <div class="image-fluid d-flex mb-3">
+
+                                <img src="{{ asset('frontend/assets/Rectangle48.png') }}" class="rounded-circle" height="50px" width="50px">
+                                <a href="{{ path('app_boutique', {'filter':p.boutique.slug}) }}" style="color: black">
+                                    <p class="text-center ms-3 mt-2">{{ p.boutique.nom }}</p>
+                                </a>
+                            </div>
+                            <img src="{{ asset('/files/images/products/') }}{{ p.image }}" style="height: 350px; width: 415px" class="card-img-top" alt="...">
+
+                            <div class="card-body">
+                                <p class="text-center"> <strong>{{ p.libelle }}</strong> </p>
+                                <p class="text-center">{% if p.isSolde %} {{ p.newMontant }} {% else %} {{ p.montant }} {% endif %}</p>
+                                <p class="text-center">{{ p.taille }}</p>
+                                <div class=" d-flex justify-content-center">
+                                    <div class="col-6">
+                                        <a class="btn btn-warning w-50 rounded-pill d-flex align-items-center justify-content-between border-0" href="{{ path('app_favoris_update', {'slug':prod.slug}) }}" role="button" style="height:50px;background-color:#3A36DB;margin-left:25%; width: 150px">
+                                            <span class="mr-2" style="margin-right: 10px">Favoris</span>
+                                            <img style="margin-right: 10px" src="{{ asset('frontend/assets/Vector.png') }}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="col-6" >
+                                        <a class="btn w-50 rounded-pill d-flex align-items-center justify-content-between border-0" href="{{ path('app_details_produit', {'slug':prod.slug}) }}" role="button" style="height:50px;background-color:#3A36DB;margin-left:25%; width: 150px">
+                                            <span class="mr-2" style="margin-right: 10px">Ajouter</span>
+                                            <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    {% endif %}
 {% endblock %}

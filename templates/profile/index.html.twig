@@ -1,0 +1,85 @@
+{% extends 'base.pages.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+    <div class="menu-panier d-flex flex-column justify-content-evenly" style="height:200px;padding:0% 5% 0% 5%;background-color:#F0F0F0">
+        <h3 class="fw-bold">Profil</h3>
+        <div class="liste-infos d-flex">
+            <div class="liste-liens d-flex w-50 justify-content-between" style="padding:0% 20% 0% 0%">
+                <a href="{{ path('app_profile') }}" class="border-bottom border-2  border-primary">Général</a>
+                <a href="{{ path('app_adresse') }}" class=" border-primary">Adresse</a>
+                <a href="{{ path('app_commande') }}" class="border-primary">Achats et factures</a>
+            </div>
+            <p class="fw-bold text-end w-50">
+                <span class="border-bottom border-dark border-2">Portefeuille:</span> {{ montant}} XOF
+            </p>
+        </div>
+    </div>
+    <div class="card-body shadow d-flex justify-content-between rounded" style="margin:2% 8% 5% 7%;padding: 0% 2% 0% 2%;height:800px">
+
+        <div class="card-left w-50 d-flex flex-column" style="padding: 2% 0% 2% 0%;">
+            <div class="info-user d-flex justify-content-center align-items-center" style="padding: 15% 5% 2% 0%">
+                <img src="{% if user.profileImage is null %}{{ asset('frontend/assets/Rectangle48.png') }}{% else %} {{ asset('/files/images/profiles/') }}{{ user.profileImage }} {% endif %}" alt="" class="cercle" height="150" width="150" style="border: 4px solid #A5A58D;border-radius:100%;">
+
+            </div>
+            <form method="post" enctype="multipart/form-data" action="{{ path('update_photo') }}">
+                <div class="input-group" style="margin: 5%; width: 500px;">
+                    <input style="border: none; height: 40px;" type="file" name="image" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                    <input class="btn btn-outline-primary" type="submit" id="inputGroupFileAddon04" value="Modifier la photo">
+                </div>
+            </form>
+            {% if user.boutique %}
+            <div class="info-user d-flex justify-content-center align-items-center mt-3"><h4> {{ user.boutique.nom}} </h4></div>
+            <div class="card-body d-flex flex-row justify-content-evenly">
+                <div class="card-left">
+                    <p class="text-center">{{ user.boutique.produits | length }}</p>
+                    <p class="text-center">articles</p>
+                </div>
+                <div class="card-right">
+                    <p class="text-center">{{ user.boutique.abonnements | length }}</p>
+                    <p class="text-center">abonnés</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+
+
+        <div class="card-right w-50" style="padding: 2% 0% 0% 4%">
+            <form action="{{ path('update_profil') }}" method="post">
+                <div class="contenair-menu d-flex justify-content-end">
+
+                    <input type="submit"  class="btn btn-primary float-end rounded h-25 " style="box-shadow: 3px 6px 9px 1px gray" value="Enregister">
+                </div>
+                <div class="contenair-body h-50">
+                    <div class="info-article d-flex flex-column justify-content-between mt-5">
+
+                        <div class="row ">
+                            <div class=" col-auto mb-3 w-50">
+                                <label for="exampleInputEmail1" class="form-label">Prenom</label>
+                                <input name="prenom" value="{{ user.prenom }}" type="text" class="form-control" style="height: 50% ;" id="exampleInputEmail1"  aria-describedby="emailHelp">
+                            </div>
+                            <div class=" col-auto mb-3 w-50">
+                                <label for="exampleInputEmail1" class="form-label">Nom</label>
+                                <input type="text" name="nom" value="{{ user.nom }}" class="form-control form-control-sm" style="height: 50% ;"   id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Telephone</label>
+                            <input type="tex" name="telephone" value="{{ user.telephone }}" class="form-control" id="exampleInputEmail1" style="height: 50% ;"  aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email</label>
+                            <input type="email" name="email" value="{{ user.email }}" class="form-control" id="exampleInputEmail1" style="height: 50% ;"  aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Mot de passe</label>
+                            <input type="password" name="password" class="form-control" id="exampleInputPassword1" style="height: 50% ;" >
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

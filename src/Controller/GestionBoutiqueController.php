@@ -41,11 +41,14 @@ class GestionBoutiqueController extends AbstractController
     #[Route('/boutique/gestion', name: 'app_gestion_boutique')]
     public function index(): Response
     {
-        $this -> user = $this->getUser();
-        if (!$this->user){
+        $user = $this->getUser();
+        if (!$user){
             return $this->redirectToRoute('app_login');
         } else {
-            $boutique = $this->boutiqueRepository->findOneBy(['client'=>$this->user]);
+            if ($user->getBoutique() == null){
+                return $this->render('gestion_boutique/boutique_creation/index.html.twig');
+            }
+            $boutique = $this->boutiqueRepository->findOneBy(['client'=>$user]);
             return $this->render('gestion_boutique/index.html.twig', [
                 'boutique'=>$boutique,
                 'cats'=>$this->catRipo->findAll()
@@ -101,6 +104,7 @@ class GestionBoutiqueController extends AbstractController
         $produit -> setDescription($data->get('description'));
         $produit -> setTaille($data->get('taille'));
         $produit -> setSlug(uniqid('prdt-'));
+        $produit -> setViews(0);
         if ($data->get('isSolde')){
 
             $produit->setIsSolde(true);
@@ -112,7 +116,6 @@ class GestionBoutiqueController extends AbstractController
         }
 
         $img=$request->files->get("image");
-
         $imageName=uniqid().'.'.$img->guessExtension();
         $img->move($this->getParameter("products"),$imageName);
         $produit->setImage($imageName);

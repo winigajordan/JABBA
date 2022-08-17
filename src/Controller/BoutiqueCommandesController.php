@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use function Symfony\Component\Translation\t;
 
+#[Route('/boutique/gestion')]
 class BoutiqueCommandesController extends AbstractController
 {
 
@@ -36,7 +37,7 @@ class BoutiqueCommandesController extends AbstractController
     }
 
 
-    #[Route('/boutique/commandes', name: 'app_boutique_commandes')]
+    #[Route('/commandes', name: 'app_boutique_commandes')]
     public function index(): Response
     {
         if (!$this->getUser()){
@@ -54,7 +55,7 @@ class BoutiqueCommandesController extends AbstractController
         ]);
     }
 
-    #[Route('/boutique/commandes/{update}/{slug}', name: 'app_boutique_commandes_update')]
+    #[Route('/commandes/{update}/{slug}', name: 'app_boutique_commandes_update')]
     public function update($update, $slug)
     {
         $details = $this->detailsRipo->findOneBy(['slug'=>$slug]);

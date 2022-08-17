@@ -4,19 +4,7 @@
 
 <div class="container">
     <div class="jumbotron">
-        <div class="card px-3 py-3 shadow">
-            {% if boutique is null %}
-                <form method="post" action="{{ path('shop_creation') }}">
-                    <h3> Creation de boutique </h3>
-
-                    <div class="mb-3">
-                        <label for="nom" class="form-label">Nom</label>
-                        <input type="text" class="form-control" id="nom" name="nom" aria-describedby="emailHelp">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Creer </button>
-                </form>
-
-            {% else %}
+        <div class="card px-3 py-3 shadow" style="margin-top: 200px">
                 <form method="post" action="{{ path('shop_name_update') }}">
                     <h5> Modification de boutique </h5>
                     <div class="row mt-3">
@@ -26,10 +14,14 @@
                         <div class="col">
                             <button type="submit" class="btn btn-primary">Modifier le nom de la boutique</button>
                         </div>
+                        <div class="col">
+                            <a class="btn btn-primary btn-sm" href="{{ path('app_boutique_commandes') }}">
+                                Commandes
+                            </a>
+                        </div>
                     </div>
-
                 </form>
-            {% endif %}
+
 
         </div>
         {% if boutique is not null %}
@@ -97,8 +89,7 @@
                         </div>
                         <div class="range-wrap my-3" style=" position: relative; margin: 0 auto 3rem;">
                             <label for="range" class="form-label">Pourcentage de reduction</label>
-                            <input id="range" type="range" class="range" min="0" max="100" style="width: 100%;" name="solde">
-                            <output class="bubble" style=" margin-top: 20px; background: red;  color: white;  padding: 4px 12px;  position: absolute;  border-radius: 4px;left: 50%;transform: translateX(-50%);"></output>
+                            <input id="number" type="number" class="form-control" min="0" max="100" style="width: 100%;" name="solde">
                         </div>
                         <div class="my-3">
                             <label for="exampleFormControlTextarea1" class="form-label">Description</label>

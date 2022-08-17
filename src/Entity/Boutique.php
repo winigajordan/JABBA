@@ -33,9 +33,13 @@ class Boutique
     #[ORM\OneToMany(mappedBy: 'boutique', targetEntity: Produit::class)]
     private Collection $produits;
 
+    #[ORM\OneToMany(mappedBy: 'boutique', targetEntity: Abonnement::class, orphanRemoval: true)]
+    private Collection $abonnements;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
+        $this->abonnements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +131,36 @@ class Boutique
             // set the owning side to null (unless already changed)
             if ($produit->getBoutique() === $this) {
                 $produit->setBoutique(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Abonnement>
+     */
+    public function getAbonnements(): Collection
+    {
+        return $this->abonnements;
+    }
+
+    public function addAbonnement(Abonnement $abonnement): self
+    {
+        if (!$this->abonnements->contains($abonnement)) {
+            $this->abonnements[] = $abonnement;
+            $abonnement->setBoutique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAbonnement(Abonnement $abonnement): self
+    {
+        if ($this->abonnements->removeElement($abonnement)) {
+            // set the owning side to null (unless already changed)
+            if ($abonnement->getBoutique() === $this) {
+                $abonnement->setBoutique(null);
             }
         }
 

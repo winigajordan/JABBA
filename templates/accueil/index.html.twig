@@ -63,139 +63,45 @@
                 <!-- Caroussel 1 -->
                 <div class="carousel-item active">
                     <div class="cards-wrapper d-flex justify-content-between">
+                        {% for prod in vue1 %}
                         <div class="card border-0" style="width: 25%;">
-                            <img src="{{ asset('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
-                                        <ion-icon name="heart" class="Favoris"></ion-icon>
-                                    </span>
-                            </label>
+                            <img src="{{ asset('/files/images/products/') }}{{ prod.image }}" style="height: 350px; width: 415px" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
+                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">{{ prod.libelle }}</p>
+                                <p class="text-center">{% if prod.isSolde %} {{ prod.newMontant }} {% else %} {{ prod.montant }} {% endif %}</p>
+                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="{{ path('app_details_produit', {'slug':prod.slug}) }}" role="button" >
+                                    <span>Details</span>
                                     <img src="{{ ('frontend/assets/Vector.png') }}" alt="">
                                 </a>
                             </div>
                         </div>
-                        <div class="card border-0" style="width: 25%;">
-                            <img src="{{ asset('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
-                                        <ion-icon name="heart" class="Favoris"></ion-icon>
-                                    </span>
-                            </label>
-                            <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
-                                    <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card border-0" style="width: 25%;">
-                            <img src="{{ asset('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
-                                        <ion-icon name="heart" class="Favoris"></ion-icon>
-                                    </span>
-                            </label>
-                            <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
-                                    <img src="{{ ('frontend/assets/Vector.png') }}" alt="">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card border-0" style="width: 25%;">
-                            <img src="{{ asset('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
-                                        <ion-icon name="heart" class="Favoris"></ion-icon>
-                                    </span>
-                            </label>
-                            <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
-                                    <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
-                                </a>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <!-- Caroussel 2 -->
+                {% if vue2|length > 0 %}
                 <div class="carousel-item">
                     <div class="cards-wrapper d-flex ">
-                        <div class="card border-0" style="width: 25%;">
-                            <img src="{{ asset('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
-                                        <ion-icon name="heart" class="Favoris"></ion-icon>
-                                    </span>
-                            </label>
-                            <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
-                                    <img src="{{ ('frontend/assets/Vector.png') }}" alt="">
-                                </a>
+
+                        {% for prod in vue2 %}
+                            <div class="card border-0" style="width: 25%;">
+                                <img src="{{ asset('/files/images/products/') }}{{ prod.image }}" style="height: 350px; width: 415px" class="card-img-top" alt="...">
+                                <label>
+
+                                </label>
+                                <div class="card-body">
+                                    <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">{{ prod.libelle }}</p>
+                                    <p class="text-center">{% if prod.isSolde %} {{ prod.newMontant }} {% else %} {{ prod.montant }} {% endif %}</p>
+                                    <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="{{ path('app_details_produit', {'slug':prod.slug}) }}" role="button" >
+                                        <span>Details</span>
+                                        <img src="{{ ('frontend/assets/Vector.png') }}" alt="">
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card border-0" style="width: 25%;">
-                            <img src="{{ asset('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
-                                        <ion-icon name="heart" class="Favoris"></ion-icon>
-                                    </span>
-                            </label>
-                            <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
-                                    <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card border-0" style="width: 25%;">
-                            <img src="{{ asset('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
-                                        <ion-icon name="heart" class="Favoris"></ion-icon>
-                                    </span>
-                            </label>
-                            <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
-                                    <img src="{{ ('frontend/assets/Vector.png') }}" alt="">
-                                </a>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
+                {% endif %}
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carousel-articles-populaires" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -206,7 +112,7 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-        <a href="" class="btn text-center">Voir plus</a>
+        <a href="{{ path('app_boutique') }}" class="btn btn-primary text-center">Voir plus</a>
     </div>
     <div class="card-text d-flex flex-column" style="height: 900px">
         <h2 class="mb-5 fw-bold">Nouveautés</h2>
@@ -215,157 +121,54 @@
                 <!-- Caroussel 1 -->
                 <div class="carousel-item active">
                     <div class="cards-wrapper d-flex justify-content-between">
-                        <div class="card border-0" style="width: 25%;">
-                            <img src="{{ ('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
+                        {% for prod in all1 %}
+                            <div class="card border-0" style="width: 25%;">
+                                <img src="{{ asset('/files/images/products/') }}{{ prod.image }}" style="height: 350px; width: 415px" class="card-img-top" alt="...">
+                                <label>
+                                    <input type="checkbox">
+                                    <span>
                                         <ion-icon name="heart" class="Favoris"></ion-icon>
                                     </span>
-                            </label>
-                            <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
-                                    <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
-                                </a>
+                                </label>
+                                <div class="card-body">
+                                    <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">{{ prod.libelle }}</p>
+                                    <p class="text-center">{% if prod.isSolde %} {{ prod.newMontant }} {% else %} {{ prod.montant }} {% endif %}</p>
+                                    <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="{{ path('app_details_produit', {'slug':prod.slug}) }}" role="button" >
+                                        <span>Details</span>
+                                        <img src="{{ ('frontend/assets/Vector.png') }}" alt="">
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card border-0" style="width: 25%;">
-                            <img src="{{ ('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
-                                        <ion-icon name="heart" class="Favoris"></ion-icon>
-                                    </span>
-                            </label>
-                            <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
-                                    <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card border-0" style="width: 25%;">
-                            <img src="{{ ('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
-                                        <ion-icon name="heart" class="Favoris"></ion-icon>
-                                    </span>
-                            </label>
-                            <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
-                                    <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card border-0" style="width: 25%;">
-                            <img src="{{ ('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
-                                        <ion-icon name="heart" class="Favoris"></ion-icon>
-                                    </span>
-                            </label>
-                            <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
-                                    <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
-                                </a>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <!-- Caroussel 2 -->
+                {% if all2|length > 0 %}
                 <div class="carousel-item">
                     <div class="cards-wrapper d-flex justify-content-between">
-                        <div class="card border-0" style="width: 25%;">
-                            <img src="{{ ('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
+
+                        {% for prod in all2 %}
+                            <div class="card border-0" style="width: 25%;">
+                                <img src="{{ asset('/files/images/products/') }}{{ prod.image }}" style="height: 350px; width: 415px" class="card-img-top" alt="...">
+                                <label>
+                                    <input type="checkbox">
+                                    <span>
                                         <ion-icon name="heart" class="Favoris"></ion-icon>
                                     </span>
-                            </label>
-                            <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
-                                    <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
-                                </a>
+                                </label>
+                                <div class="card-body">
+                                    <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">{{ prod.libelle }}</p>
+                                    <p class="text-center">{% if prod.isSolde %} {{ prod.newMontant }} {% else %} {{ prod.montant }} {% endif %}</p>
+                                    <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="{{ path('app_details_produit', {'slug':prod.slug}) }}" role="button" >
+                                        <span>Details</span>
+                                        <img src="{{ ('frontend/assets/Vector.png') }}" alt="">
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card border-0" style="width: 25%;">
-                            <img src="{{ ('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
-                                        <ion-icon name="heart" class="Favoris"></ion-icon>
-                                    </span>
-                            </label>
-                            <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
-                                    <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card border-0" style="width: 25%;">
-                            <img src="{{ ('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
-                                        <ion-icon name="heart" class="Favoris"></ion-icon>
-                                    </span>
-                            </label>
-                            <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
-                                    <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card border-0" style="width: 25%;">
-                            <img src="{{ ('frontend/assets/Rectangle48.png') }}" class="card-img-top" alt="...">
-                            <label>
-                                <input type="checkbox">
-                                <span>
-                                        <ion-icon name="heart" class="Favoris"></ion-icon>
-                                    </span>
-                            </label>
-                            <div class="card-body">
-                                <p class="text-center" style="font-size:0.8em;letter-spacing: .2rem;">ZARA</p>
-                                <p class="text-center">Prix</p>
-                                <p class="text-center">Taille</p>
-                                <a class="btn btn-primary w-50 rounded-pill d-flex align-items-center justify-content-evenly border-0" href="#" role="button" >
-                                    <span>Ajouter</span>
-                                    <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
-                                </a>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
+                {% endif %}
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carousel-nouveautes" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -376,11 +179,11 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-        <a href="" class="btn text-center">Voir plus</a>
+
     </div>
 
     <div class="bouton" style="height:200px;width:92%">
-        <a class="btn btn-primary d-flex justify-content-evenly align-items-center rounded-pill border-0 justify-content-center float-end" href="#" role="button" >
+        <a class="btn btn-primary d-flex justify-content-evenly align-items-center rounded-pill border-0 justify-content-center float-end" href="{{ path('app_boutique') }}" role="button" >
             <span>Voir la boutique</span>
             <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
         </a>

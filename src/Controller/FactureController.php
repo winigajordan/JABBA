@@ -27,8 +27,19 @@ class FactureController extends AbstractController
     #[Route('/facture/{slug}', name: 'app_facture')]
     public function index($slug, PdfService $pdf)
     {
+        if ($this->getUser()==null){
+            return $this->redirectToRoute('app_login');
+        }
+        $cmd = $this->cmdRipo->findOneBy(['slug'=>$slug]);
+        $coupons = [];
+        $totalReduction = 0;
+        foreach ($cmd->getCommandeReductions() as $key=>$reduction){
+            $totalReduction += $reduction->getCode()->getReduction();
+        }
+
         $html =  $this->render('facture/facture.html.twig', [
-            'cmd'=>$this->cmdRipo->findOneBy(['slug'=>$slug])
+            'cmd'=>$this->cmdRipo->findOneBy(['slug'=>$slug]),
+            'reduction'=>$totalReduction
         ]);
         return $html;
     }

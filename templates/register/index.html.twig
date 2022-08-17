@@ -2,6 +2,50 @@
 {% block title %} Register {% endblock %}
 
 {% block body %}
+    <div class="card-group">
+        <div class="card-left w-50">
+            <img src="{{ asset('frontend/assets/Rectangle48.png') }}" class="card-img-top">
+
+        </div>
+        <div class="card-right w-50" style="padding:3%">
+            <form method="post" action="{{ path('account_creation') }}">
+                <div class="mb-5">
+                    <h3>DEVENIR MEMBRE</h3>
+                    <span>Déjà membre ?</span> <a href="{{ path('app_login') }}">S'identifier Ici</a>
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputName1" class="form-label">Nom</label>
+                    <input type="text" name="nom" class="form-control" id="exampleInputName1" aria-describedby="nameHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputName1" class="form-label">Prenom</label>
+                    <input type="text" name="prenom" class="form-control" id="exampleInputName1" aria-describedby="nameHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Telephone</label>
+                    <input type="text" name="telephone" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputName1" class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" id="exampleInputName1" aria-describedby="nameHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+                </div>
+
+
+                <div class="d-grid gap-2 mt-5">
+                    <button class="btn1 btn-primary" type="submit">Créer un compte</button>
+
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+    <!--
     <div class="container">
     <div class="jumbotron">
         <form class="px-6 py-3" method="post" action="{{ path('account_creation') }}">
@@ -33,5 +77,6 @@
         </form>
     </div>
     </div>
+    -->
 {% endblock %}
 

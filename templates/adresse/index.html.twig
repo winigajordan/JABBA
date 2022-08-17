@@ -2,10 +2,24 @@
 
 {% block title %}Adresse{% endblock %}
 {% block body %}
+    <div class="menu-panier d-flex flex-column justify-content-evenly" style="height:200px;padding:0% 5% 0% 5%;background-color:#F0F0F0">
+        <h3 class="fw-bold">Profil</h3>
+        <div class="liste-infos d-flex">
+            <div class="liste-liens d-flex w-50 justify-content-between" style="padding:0% 20% 0% 0%">
+                <a href="{{ path('app_profile') }}" class="border-primary">Général</a>
+                <a href="{{ path('app_adresse') }}" class="border-bottom border-2   border-primary">Adresse</a>
+                <a href="{{ path('app_commande') }}" class="border-primary">Achats et factures</a>
+            </div>
+            <p class="fw-bold text-end w-50">
+                <span class="border-bottom border-dark border-2">Portefeuille:</span> {{ montant}} XOF
+            </p>
+        </div>
+    </div>
 <div class="container">
     <div class="jumbotron">
         <div class="card">
-            <div style="height: 250px">
+
+            <div style="height: 20px">
             </div>
             <form class="p-5 form-floating" method="post" action="{{ path('app_adresse_add') }}">
 
@@ -20,31 +34,31 @@
                 </div>
 
                 <div class="form-floating mb-3 mt-3">
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="pays">
+                    <input type="text" class="form-control" value="{% if add is not null %} {{ add.pays }}{% endif %}" id="exampleFormControlInput1" name="pays">
                     <label for="exampleFormControlInput1" class="form-label">Pays</label>
                 </div>
 
                 <div class="form-floating mb-3">
 
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="ville">
+                    <input type="text" class="form-control" value="{% if add is not null %} {{ add.ville }}{% endif %}" id="exampleFormControlInput1" name="ville">
                     <label for="exampleFormControlInput1" class="form-label">Ville</label>
                 </div>
 
                 <div class="form-floating mb-3">
 
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="code">
+                    <input type="text" class="form-control" value="{% if add is not null %} {{ add.code }}{% endif %}" id="exampleFormControlInput1" name="code">
                     <label for="exampleFormControlInput1" class="form-label">Code</label>
                 </div>
 
                 <div class="form-floating mb-3">
 
-                    <input type="text" class="form-control" id="exampleFormControlInput1" name="quartier">
+                    <input type="text" class="form-control" value="{% if add is not null %} {{ add.quartier }}{% endif %}" id="exampleFormControlInput1" name="quartier">
                     <label for="exampleFormControlInput1" class="form-label">Quartier</label>
                 </div>
 
                 <div class="form-floating mb-3">
 
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="precision"></textarea>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="precision">{% if add is not null %} {{ add.precisions }}{% endif %}</textarea>
                     <label for="exampleFormControlTextarea1" class="form-label">Precision</label>
                 </div>
                 <input type="submit" class="form-control">

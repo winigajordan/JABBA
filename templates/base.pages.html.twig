@@ -22,17 +22,18 @@
       <img class="logo1 h-50 " src="{{ asset('frontend/assets/logo.png') }}">
     </a>
 
-    <form action="" class="d-flex align-items-center h-100 " role="search" style="width:40%">
+    <form action="{{ path('app_boutique_search') }}" class="d-flex align-items-center h-100 " method="post" style="width:40%">
 
-
-      <select name="filtre" id="filtre" class="filtre h-100 border-0" style="background-color: transparent;">
+    <!--
+      <select id="filtre" class="filtre h-100 border-0" style="background-color: transparent;">
 
         <option value="Femmes">Femmes</option>
         <option value="Hommes">Hommes</option>
         <option value="Enfants">Enfants</option>
         <option value="Celebrites">Célébrités</option>
       </select>
-      <input type="text" name="" id="" placeholder="Rechercher des articles" class="input-search border-0 h-50 w-75" style="background:buttonface">
+      -->
+      <input type="text" name="key" id="" placeholder="Rechercher des articles" class="input-search border-0 h-50 w-75" style="background:buttonface; padding: 20px">
       <button type="submit" class="bouton-global-recherche border-0 h-50 col-2">
         <svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20">
           <path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
@@ -43,10 +44,15 @@
     </form>
     <a href="{{ path('app_boutique') }}" class="fw-bolder">Boutique</a>
     <a href="" class="fw-bolder">Forum</a>
-    <a href="" class="btn btn-primary text-light rounded-pill">Connexion</a>
-    <a href="" class="btn btn-primary text-light rounded-pill">Inscription</a>
-    <a href="" class="btn btn-primary text-light rounded-pill">Vendre</a>
-    <a href="" class="fw-bolder">
+    {% if app.user is null %}
+      <a href="{{ path('app_login') }}" class="btn btn-primary text-light rounded-pill">Connexion/Inscription</a>
+    {% else %}
+      <a href="{{ path('app_profile') }}" class="fw-bolder">Profil</a>
+      <a href="{{ path('app_logout') }}" class="btn btn-danger text-light rounded-pill">Deconnexion</a>
+    {% endif %}
+
+    <a href="{{ path('app_gestion_boutique') }}" class="btn btn-primary text-light rounded-pill">Vendre</a>
+    <a href="{{ path('app_panier') }}" class="fw-bolder">
       <img src="{{ asset('frontend/assets/panier.png') }}" width="20" height="20" alt="" srcset="">
       <span>Panier</span>
     </a>

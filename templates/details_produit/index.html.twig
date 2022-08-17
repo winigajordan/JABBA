@@ -23,7 +23,7 @@
                     <img src="{{ asset('frontend/assets/Rectangle48.png') }}" alt="" class="cercle" height="50" width="50" style="border: 1px solid transparent;border-radius:100%;">
                     <span style="color:black">{{ prod.boutique.nom }}</span>
                 </div>
-                <a href="" class="btn btn-primary float-end rounded h-25 w-25" style="box-shadow: 3px 6px 9px 1px gray">suivre</a>
+                <a href="{{ path('app_abonnement',{'slug':prod.slug}) }}" class="btn btn-primary float-end rounded h-25 w-25" style="box-shadow: 3px 6px 9px 1px gray">suivre</a>
             </div>
             <div class="contenair-body h-50">
                 <div class="info-article d-flex flex-column justify-content-evenly h-75">
@@ -77,13 +77,13 @@
                                 <p class="text-center">{{ p.taille }}</p>
                                 <div class=" d-flex justify-content-center">
                                     <div class="col-6">
-                                        <a class="btn btn-warning w-50 rounded-pill d-flex align-items-center justify-content-between border-0" href="{{ path('app_favoris_update', {'slug':prod.slug}) }}" role="button" style="height:50px;background-color:#3A36DB;margin-left:25%; width: 150px">
+                                        <a class="btn btn-warning w-50 rounded-pill d-flex align-items-center justify-content-between border-0" href="{{ path('app_favoris_update', {'slug':p.slug}) }}" role="button" style="height:50px;background-color:#3A36DB;margin-left:25%; width: 150px">
                                             <span class="mr-2" style="margin-right: 10px">Favoris</span>
                                             <img style="margin-right: 10px" src="{{ asset('frontend/assets/Vector.png') }}" alt="">
                                         </a>
                                     </div>
                                     <div class="col-6" >
-                                        <a class="btn w-50 rounded-pill d-flex align-items-center justify-content-between border-0" href="{{ path('app_details_produit', {'slug':prod.slug}) }}" role="button" style="height:50px;background-color:#3A36DB;margin-left:25%; width: 150px">
+                                        <a class="btn w-50 rounded-pill d-flex align-items-center justify-content-between border-0" href="{{ path('app_details_produit', {'slug':p.slug}) }}" role="button" style="height:50px;background-color:#3A36DB;margin-left:25%; width: 150px">
                                             <span class="mr-2" style="margin-right: 10px">Ajouter</span>
                                             <img src="{{ asset('frontend/assets/Vector.png') }}" alt="">
                                         </a>

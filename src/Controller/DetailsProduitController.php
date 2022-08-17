@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\CategorieProduitRepository;
 use App\Repository\ProduitRepository;
 use ContainerADFKH7j\getDoctrine_Orm_DefaultEntityManager_PropertyInfoExtractorService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +22,7 @@ class DetailsProduitController extends AbstractController
     }
 
     #[Route('/details/produit/{slug}', name: 'app_details_produit')]
-    public function index($slug): Response
+    public function index($slug, EntityManagerInterface $em): Response
     {
         $prod = $this->prodRipo->findOneBy(['slug'=>$slug]);
         $produits = $this->prodRipo->findBy(['categorie'=>$prod->getCategorie()]);
@@ -30,13 +31,16 @@ class DetailsProduitController extends AbstractController
                 unset($produits[$id]);
             }
         }
+        $prod->setViews($prod->getViews()+1);
         if (count($produits)>4){
             $produits = array_splice($produits, 0, 4);
         }
-
+        $em->persist($prod);
+        $em->flush();
         return $this->render('details_produit/index.html.twig', [
            'prod' => $prod,
             'produits'=>$produits
         ]);
+
     }
 }

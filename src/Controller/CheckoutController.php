@@ -13,6 +13,9 @@ class CheckoutController extends AbstractController
     #[Route('/checkout', name: 'app_checkout')]
     public function index(SessionInterface $session,ProduitRepository $prodRipo ): Response
     {
+        if ($this->getUser()->getAdresse()==null){
+            return $this->redirectToRoute('app_adresse');
+        }
         $cartItem = $session->get('panier', []);
         $coupons = $session->get('coupons', []);
         $panier =[];

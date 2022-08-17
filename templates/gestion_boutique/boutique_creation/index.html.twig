@@ -1,0 +1,24 @@
+{% extends 'base.pages.html.twig' %}
+{% block title %} Creation boutique {% endblock %}
+{% block body %}
+    <div class="card-group" style="margin-top: 170px;">
+        <div class="card-left w-50">
+            <img src="{{ asset('frontend/assets/Rectangle48.png') }}" class="card-img-top"  >
+
+        </div>
+        <div class="card-right w-50" style="padding:3%">
+            <form method="post" action="{{ path('shop_creation') }}">
+                <div class="mb-5" style="margin-top: 15%;">
+                    <h3>CRÉEZ VOTRE BOUTIQUE</h3> <br>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label"> <strong> Nom de votre boutique</strong></label>
+                    <input type="text" name="nom" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="">
+                    <button class="btn1 btn-primary" type="submit" name="btn_save" value="connexion">Suivant</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

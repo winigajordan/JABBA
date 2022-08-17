@@ -44,10 +44,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'auteur', targetEntity: Commentaire::class)]
     private Collection $commentaires;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Abonnement::class, orphanRemoval: true)]
+    private Collection $abonnements;
+
     public function __construct()
     {
         $this->blogs = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->abonnements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,6 +202,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($commentaire->getAuteur() === $this) {
                 $commentaire->setAuteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Abonnement>
+     */
+    public function getAbonnements(): Collection
+    {
+        return $this->abonnements;
+    }
+
+    public function addAbonnement(Abonnement $abonnement): self
+    {
+        if (!$this->abonnements->contains($abonnement)) {
+            $this->abonnements[] = $abonnement;
+            $abonnement->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAbonnement(Abonnement $abonnement): self
+    {
+        if ($this->abonnements->removeElement($abonnement)) {
+            // set the owning side to null (unless already changed)
+            if ($abonnement->getUser() === $this) {
+                $abonnement->setUser(null);
             }
         }
 

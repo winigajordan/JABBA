@@ -44,7 +44,8 @@ class CommandeController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
         return $this->render('commande/index.html.twig', [
-            'commandes'=>$this->getUser()->getCommandes()
+            'commandes'=>$this->getUser()->getCommandes(),
+            'montant'=>$this->getUser()->getWallet()->getSolde()
         ]);
     }
 
@@ -144,6 +145,9 @@ class CommandeController extends AbstractController
     #[Route('/commande/details/{slug}', name: 'app_commande_details')]
     public function details($slug): Response
     {
+        if ($this->getUser()==null){
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('commande/index.html.twig', [
             'commandes'=>$this->getUser()->getCommandes(),
             'selected'=>$this->cmdRipo->findOneBy(['slug'=>$slug])
